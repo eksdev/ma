@@ -220,7 +220,7 @@ app.layout = html.Div([
         
                 dash_table.DataTable(
                     id='metrics-table',
-                    columns=FUND_COLUMNS_DEFS,
+                    columns=[{"name": col, "id": col} for col in FUND_COLUMNS],
                     data=[],
                     style_table={'overflowX': 'auto', 'marginBottom': '1rem'},
                     style_cell={'textAlign': 'center', 'padding': '5px'},
@@ -271,7 +271,7 @@ app.layout = html.Div([
             ], style={'padding': '1rem'})
         ]),
 
-        # ============= NEW TAB FOR SIMILAR SYMBOLS =============
+        # ---------------- Similar Stocks Tab ----------------
         dcc.Tab(label="Similar Stocks", children=[
             html.Div([
                 html.H2("Discover Similar Companies",
@@ -306,7 +306,6 @@ app.layout = html.Div([
 
 # ------------------- CALLBACKS -------------------
 
-# Callback for the new Similar Stocks tab
 @app.callback(
     Output('similar-table', 'data'),
     Input('similar-button', 'n_clicks'),
@@ -320,14 +319,9 @@ def fetch_similar_stocks(n_clicks, ticker):
     """
     if not ticker:
         return []
-
-    # Instantiate WS1 and scrape
     ws1 = WS1(ticker)
     related_symbols = ws1.scrape()
-
-    # Convert the list into the format for Dash DataTable
-    data_rows = [{"Symbol": sym} for sym in related_symbols]
-    return data_rows
+    return [{"Symbol": sym} for sym in related_symbols]
 
 @app.callback(
     Output("payment-confirmation", "children"),
@@ -349,8 +343,8 @@ def handle_buy_now(n_clicks):
                     }
                 ],
                 mode="payment",
-                success_url="https://your-success-url.com",  # Replace with your success URL
-                cancel_url="https://your-cancel-url.com",    # Replace with your cancel URL
+                success_url="https://your-success-url.com",
+                cancel_url="https://your-cancel-url.com",
             )
             return html.A(
                 "Redirecting to Stripe Checkout...",
@@ -361,12 +355,13 @@ def handle_buy_now(n_clicks):
         except Exception as e:
             return f"Error creating checkout session: {e}"
 
-# Callback for Fundamental Tab
 @app.callback(
     Output('metrics-store', 'data'),
     Output('metrics-table', 'data'),
-    [Input('fetch-button', 'n_clicks'), Input('reset-button', 'n_clicks')],
-    [State('ticker-input', 'value'), State('metrics-store', 'data')],
+    [Input('fetch-button', 'n_clicks'), 
+     Input('reset-button', 'n_clicks')],
+    [State('ticker-input', 'value'), 
+     State('metrics-store', 'data')],
     prevent_initial_call=True
 )
 def update_table(n_fetch, n_reset, ticker, current_data):
@@ -375,8 +370,9 @@ def update_table(n_fetch, n_reset, ticker, current_data):
     elif dash.callback_context.triggered_id == 'fetch-button' and ticker:
         df = get_metrics(ticker)
         df = df[df['Metric'].isin([
-            'Market Cap', 'Forward P/E', 'P/E', 'Insider Own', 'Short Interest',
-            'Income', 'Sales', 'ROE', 'ROA', 'Beta', 'Employees', 'Sales Y/Y TTM'
+            'Market Cap', 'Forward P/E', 'P/E', 'Insider Own', 
+            'Short Interest','Income', 'Sales', 'ROE', 'ROA', 
+            'Beta', 'Employees', 'Sales Y/Y TTM'
         ])]
 
         if df.empty:
@@ -384,10 +380,11 @@ def update_table(n_fetch, n_reset, ticker, current_data):
         else:
             metrics_list = df['Value'].apply(convert_to_number).tolist()
         
-        row_dict = {col: metrics_list[i] if i < len(metrics_list) else None
-                    for i, col in enumerate(FUND_COLUMNS[1:])}
+        row_dict = {
+            col: metrics_list[i] if i < len(metrics_list) else None
+            for i, col in enumerate(FUND_COLUMNS[1:])
+        }
         row_dict['Ticker'] = ticker.upper()
-
         updated_data = current_data + [row_dict]
         return updated_data, updated_data
     return dash.no_update, dash.no_update
@@ -404,5 +401,8 @@ def download_csv(n_clicks, data):
         return dcc.send_data_frame(df.to_csv, "fundamental_analysis.csv")
     return None
 
+# ------------------- MAIN ENTRY -------------------
 if __name__ == '__main__':
-    app.run_server(debug=True, port=8150)
+    # Use Heroku's port if available, else default to 8050 locally
+    port = int(os.environ.get('PORT', 8050))
+    app.run_server(debug=True, host='0.0.0.0', port=port)
