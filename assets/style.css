@@ -1,0 +1,652 @@
+/********************************************************************************
+  1. IMPORT + GLOBAL VARIABLES
+********************************************************************************/
+
+/* Example font import (Inter) - adjust as needed */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+/* :root variables for consistent theming across your site */
+:root {
+  /* Color Palette */
+  --color-background: #FFFFFF;
+  --color-surface: #FFFFFF;
+  --color-primary: #3B82F6;   /* e.g., a modern blue */
+  --color-secondary: #F97316; /* e.g., an orange accent */
+  --color-text: #1F2937;      /* near-black text */
+  --color-heading: #111827;   /* slightly darker text */
+  --color-muted: #6B7280;     /* gray for secondary text */
+  --color-border: #E5E7EB;    /* light border color */
+
+  /* Button Layered Animations */
+  --bg-color-1: #121212;
+  --bg-color-2: #FFD433;
+  --bg-color-3: #FF90E8;
+  --btn-padding: 1rem 4rem;
+  --btn-font-family: 'Poppins', sans-serif;
+  --btn-step: 0.5rem;
+
+  /* Spacing & Font Sizes */
+  --spacing-unit: 1rem;
+  --radius-base: 0.5rem;
+  --font-size-base: 16px;
+  --font-size-sm: 0.875rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+
+  /* Shadow and Transition Effects */
+  --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 3px 6px rgba(0, 0, 0, 0.15);
+  --shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.2);
+  --transition-duration: 0.3s;
+}
+
+/********************************************************************************
+  2. BASIC RESET + UNIVERSAL STYLES
+********************************************************************************/
+
+/* Minimal reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove default list styles for UL/OL */
+ul, ol {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+/* Remove default text-decoration for links */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* HTML and body */
+html {
+  font-size: var(--font-size-base); 
+  scroll-behavior: smooth;
+}
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  overflow-x: hidden;
+}
+
+/********************************************************************************
+  3. TYPOGRAPHY: HEADINGS, PARAGRAPHS, ETC.
+********************************************************************************/
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  color: var(--color-heading);
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+h1 { font-size: 2rem; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+h5 { font-size: 1.125rem; }
+h6 { font-size: 1rem; }
+
+p {
+  margin-bottom: 1rem;
+  color: var(--color-text);
+}
+
+small {
+  font-size: var(--font-size-sm);
+}
+
+strong {
+  font-weight: 700;
+}
+
+em {
+  font-style: italic;
+}
+
+mark {
+  background-color: #FEF3C7; /* highlight with a soft yellow */
+}
+
+/********************************************************************************
+  4. TEXT-LEVEL SEMANTICS
+********************************************************************************/
+
+abbr[title], dfn[title] {
+  border-bottom: 1px dotted var(--color-muted);
+  cursor: help;
+}
+
+#buy-now-button {
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#buy-now-button:hover {
+    background-color: #1D4ED8; /* Darker shade of blue */
+    transform: scale(1.1); /* Slightly enlarge the button */
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+
+code, kbd, samp {
+  font-family: 'Fira Code', monospace;
+  background-color: #F3F4F6;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+}
+
+blockquote {
+  border-left: 4px solid var(--color-primary);
+  padding-left: 1rem;
+  color: var(--color-muted);
+  margin: 1rem 0;
+}
+
+/********************************************************************************
+  5. LAYOUT ELEMENTS: SECTION, ARTICLE, ASIDE, HEADER, FOOTER, MAIN, ETC.
+********************************************************************************/
+
+section, article, aside, nav, header, footer, main {
+  margin-bottom: 2rem;
+  display: block;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-unit);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-unit);
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-light);
+  padding: var(--spacing-unit);
+  transition: box-shadow var(--transition-duration);
+}
+.card:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+/********************************************************************************
+  6. LINKS & INTERACTION
+********************************************************************************/
+
+a:hover {
+  color: var(--color-primary);
+}
+
+/********************************************************************************
+  7. LISTS (UL, OL, DL, DT, DD)
+********************************************************************************/
+
+ul li, ol li {
+  margin-bottom: 0.5rem;
+}
+
+dl {
+  margin-bottom: 1rem;
+}
+dt {
+  font-weight: 700;
+}
+dd {
+  margin: 0 0 0.5rem 1rem;
+}
+
+/********************************************************************************
+  8. TABLES
+********************************************************************************/
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--color-border);
+}
+
+th, td {
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  vertical-align: middle;
+  text-align: left;
+}
+
+thead th {
+  background-color: #F3F4F6;
+  font-weight: 700;
+}
+
+table tr:nth-child(odd) {
+  background-color: #F9FAFB;
+}
+table tr:hover {
+  background-color: #E5E7EB;
+}
+
+/********************************************************************************
+  9. FORMS
+********************************************************************************/
+
+label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  background-color: var(--color-surface);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/********************************************************************************
+  10. BUTTONS
+********************************************************************************/
+
+button {
+  cursor: pointer;
+  background: var(--color-primary);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--radius-base);
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background var(--transition-duration), transform 0.1s ease, box-shadow var(--transition-duration);
+  box-shadow: var(--shadow-light);
+}
+button:hover {
+  background: #2563EB;
+  box-shadow: var(--shadow-hover);
+}
+button:active {
+  transform: scale(0.98);
+}
+
+/********************************************************************************
+  11. MEDIA ELEMENTS: IMG, VIDEO, AUDIO, CANVAS, ETC.
+********************************************************************************/
+
+img, video, canvas {
+  max-width: 100%;
+  display: block;
+}
+
+/********************************************************************************
+  12. MODERN ANIMATIONS
+********************************************************************************/
+
+.fade-in-up {
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hoverable {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.hoverable:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-medium);
+}
+
+/********************************************************************************
+  13. FINISHING TOUCHES
+********************************************************************************/
+
+.smooth-appear {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.center-text {
+  text-align: center;
+}
+
+/********************************************************************************
+  14. ENHANCED STYLES FOR APPEAL
+********************************************************************************/
+
+/* Gradient Button Effect */
+.gradient-button {
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--radius-base);
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background var(--transition-duration), transform 0.1s ease, box-shadow var(--transition-duration);
+  box-shadow: var(--shadow-light);
+}
+.gradient-button:hover {
+  background: linear-gradient(90deg, var(--color-secondary), var(--color-primary));
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Animated Section Headers */
+.section-header {
+  position: relative;
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-heading);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.section-header::after {
+  content: '';
+  display: block;
+  width: 100px;
+  height: 4px;
+  background: var(--color-primary);
+  margin: 0.5rem auto 0;
+  border-radius: var(--radius-base);
+}
+
+/* Subtle Card Glow on Hover */
+.card:hover {
+  box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
+  transform: translateY(-5px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Animated Icons */
+.animated-icon {
+  transition: transform 0.3s ease;
+}
+.animated-icon:hover {
+  transform: rotate(15deg);
+}
+
+/* Custom Tooltip */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+.tooltip .tooltip-text {
+  visibility: hidden;
+  width: 200px;
+  background-color: var(--color-heading);
+  color: #fff;
+  text-align: center;
+  border-radius: var(--radius-base);
+  padding: 0.5rem;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; /* Adjust depending on placement */
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Glowing Borders for Focus Elements */
+input:focus, select:focus, textarea:focus {
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.2); /* Adjust color for secondary accent */
+}
+
+/* Enhanced Button Animations */
+.button-hover-expand {
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+.button-hover-expand::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 300%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  transition: left 0.3s ease;
+  z-index: -1;
+}
+.button-hover-expand:hover::after {
+  left: 0;
+}
+.button-hover-expand:hover {
+  color: #fff;
+}
+
+/********************************************************************************
+  15. SPECIALIZED EFFECTS FOR A UNIQUE TOUCH
+********************************************************************************/
+
+/* Dynamic Background Animations */
+@keyframes gradient-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.dynamic-background {
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary), #FF90E8, #3B82F6);
+  background-size: 400% 400%;
+  animation: gradient-flow 10s ease infinite;
+}
+
+/* Neon Glow Effects */
+.neon-text {
+  color: var(--color-primary);
+  text-shadow: 0 0 5px var(--color-primary), 0 0 10px var(--color-primary), 0 0 20px var(--color-secondary);
+}
+
+/* Glassmorphism Cards */
+.glass-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-light);
+  padding: var(--spacing-unit);
+  transition: box-shadow var(--transition-duration), transform 0.3s ease;
+}
+.glass-card:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transform: translateY(-5px);
+}
+
+/* 3D Tilt Effect */
+.tilt-card {
+  perspective: 1000px;
+}
+.tilt-card:hover > .tilt-content {
+  transform: rotateY(10deg) rotateX(10deg);
+}
+.tilt-content {
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+}
+
+/* Floating Effect */
+.float-effect {
+  animation: floating 3s ease-in-out infinite;
+}
+@keyframes floating {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Button Ripple Effect */
+.button-ripple {
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+.button-ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  transition: width 0.5s ease, height 0.5s ease, opacity 0.5s ease;
+}
+.button-ripple:hover::after {
+  width: 200px;
+  height: 200px;
+  opacity: 0;
+}
+
+/* Text Highlight Animation */
+@keyframes highlight {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+.highlight-animated {
+  background-image: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: highlight 3s linear infinite;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 50%, #FF90E8 100%);
+  background-size: 200%;
+  animation: gradient-flow 5s linear infinite;
+}
+
+/* Animated Border Buttons */
+.animated-border-button {
+  position: relative;
+  border: 2px solid transparent;
+  border-image: linear-gradient(90deg, var(--color-primary), var(--color-secondary)) 1;
+  background-clip: padding-box;
+  transition: all 0.3s ease;
+}
+.animated-border-button:hover {
+  border-image: linear-gradient(90deg, var(--color-secondary), var(--color-primary)) 1;
+  transform: scale(1.05);
+}
+
+/********************************************************************************
+  16. CREATIVE SECTION TRANSITIONS
+********************************************************************************/
+
+/* Diagonal Divider */
+.diagonal-divider {
+  position: relative;
+  overflow: hidden;
+  height: 150px;
+  background: var(--color-primary);
+}
+.diagonal-divider::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--color-secondary);
+  clip-path: polygon(0 0, 100% 100%, 100% 0);
+}
+
+/* Fade-In Section Animation */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fade-in-section 1s ease forwards;
+}
+@keyframes fade-in-section {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/********************************************************************************
+  17. FINAL TOUCHES
+********************************************************************************/
+
+/* Starry Background Effect */
+@keyframes stars {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-100%); }
+}
+.starry-background {
+  background: url('stars.png') repeat-y;
+  background-size: cover;
+  animation: stars 30s linear infinite;
+}
+
+/* Gradient Scrollbar */
+body::-webkit-scrollbar {
+  width: 12px;
+}
+body::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  border-radius: 6px;
+}
+body::-webkit-scrollbar-track {
+  background: var(--color-border);
+}
+
